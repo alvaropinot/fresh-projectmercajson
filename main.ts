@@ -18,7 +18,7 @@ type Product = {
 }
 const kv = await Deno.openKv()
 
-Deno.cron('Update Products', { minutes: { every: 1 } }, async () => {
+Deno.cron('Update Products', { hours: { every: 1 } }, async () => {
   // Use an API key with `browse` ACL
   const client = algoliasearch('7UZJKL1DJ0', '9d8f2e39e90df472b4f2e559a116fe17')
   const index = client.initIndex('products_prod_mad1_es')
