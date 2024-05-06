@@ -11,16 +11,33 @@ import algoliasearch from 'https://esm.sh/algoliasearch@4.23.3'
 import { start } from '$fresh/server.ts'
 import manifest from './fresh.gen.ts'
 import config from './fresh.config.ts'
+type Product = {
+  id: string
+  name: string
+}
+const kv = await Deno.openKv()
 
-Deno.cron('Log a message', { minute: { every: 5 } }, async () => {
+const get = async ({ kv, prefix = 'Products' } = {}) => {
+  const products = []
+  for await (const res of kv.list({ prefix: [prefix] })) {
+    products.spush(res.value)
+  }
+  return products
+}
+
+Deno.cron('Log a message', { minutes: { every: 1 } }, async () => {
   // Use an API key with `browse` ACL
-  const client = algoliasearch('7UZJKL1DJ0', '9d8f2e39e90df472b4f2e559a116fe17')
-  const index = client.initIndex('products_prod_mad1_es')
+  // const client = algoliasearch('7UZJKL1DJ0', '9d8f2e39e90df472b4f2e559a116fe17')
+  // const index = client.initIndex('products_prod_mad1_es')
 
-  const { hits } = await index.search('', {
-    hitsPerPage: 9000,
-  })
-  console.log(JSON.stringify(hits), null, 2)
+  // const { hits } = await index.search('', {
+  //   hitsPerPage: 9000,
+  // })
+  // console.log(JSON.stringify(hits), null, 2)
+  console.log('Products')
+  console.log(JSON.stringify(get({ kv })), null, 2)
 })
+console.log('Products')
+console.log(JSON.stringify(get({ kv })), null, 2)
 
 await start(manifest, config)
