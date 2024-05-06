@@ -36,7 +36,9 @@ export const handler: Handlers<User | null> = {
     //   // console.log('hits')
     //   console.log(JSON.stringify(response, null, 2))
     // })
-    return new Response(JSON.stringify(hits))
+    return new Response(JSON.stringify(hits), {
+      headers: { 'Content-Type': 'application/json' },
+    })
   },
   async POST(req, _ctx) {
     const user = (await req.json()) as User
