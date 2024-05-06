@@ -78,7 +78,7 @@ export const handler: Handlers<Product | null> = {
         // attributesToRetrieve: ['firstname', 'lastname'],
         hitsPerPage: 9000,
       })
-      .then(async function waitAlgo(response = { hits = [] }) {
+      .then(async function waitAlgo(response) {
         console.log(JSON.stringify(response, null, 2))
 
         const products = await setAll(response.hits)
