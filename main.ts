@@ -7,7 +7,7 @@
 import '$std/dotenv/load.ts'
 import 'https://deno.land/x/xhr@0.1.0/mod.ts'
 import algoliasearch from 'https://esm.sh/algoliasearch@4.23.3'
-import { setAll, getAll } from './routes/api/users/index.ts'
+import { setAll, getAll } from './routes/api/products/index.ts'
 
 import { start } from '$fresh/server.ts'
 import manifest from './fresh.gen.ts'
