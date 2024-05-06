@@ -44,13 +44,16 @@ const getAll = async ({ kv, prefix = 'Products' } = {}) => {
   return products
 }
 
-const setAll = async (hits = []) => {
-  const results = hits.map((hit) =>{
-    console.log('written', hit)
-    return set({ data: hit, key: hit.id, prefix = 'Products' }),
-  }
+const setHit = async (hit = { id: 'jd' }) => {
+  console.log('Writting', hit)
+  return await set({ data: hit, key: hit.id, prefix: 'Products' }).catch(
+    console.error
   )
-  
+}
+
+const setAll = async (hits = []) => {
+  const results = await hits.map(setHit)
+
   return await Promise.all(results)
 }
 
@@ -69,6 +72,6 @@ Deno.cron('Log a message', { minutes: { every: 1 } }, async () => {
   console.log(products)
 })
 console.log('Products')
-console.log(JSON.stringify(get({ kv }), null, 2))
+console.log(JSON.stringify(getAll({ kv }), null, 2))
 
 await start(manifest, config)
