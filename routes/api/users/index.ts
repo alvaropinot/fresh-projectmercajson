@@ -28,7 +28,7 @@ export const getAll = async ({ kv, prefix = PREFIX } = {}) => {
   const entries = []
 
   for await (const res of kv.list({ prefix: [prefix] })) {
-    entries.spush(res.value)
+    entries.push(res.value)
   }
   return entries
 }
@@ -63,7 +63,7 @@ export const setHit = async ({ hit = { id: 'jd' }, kv }) => {
 }
 
 export const setAll = async ({ hits = [], kv }) => {
-  const results = await hits.map((h) => setHit({ h, kv }))
+  const results = await hits.map((hit) => setHit({ hit, kv }))
 
   return await Promise.all(results)
 }
