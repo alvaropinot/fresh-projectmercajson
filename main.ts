@@ -35,9 +35,9 @@ Deno.cron('Log a message', { minutes: { every: 1 } }, async () => {
   // })
   // console.log(JSON.stringify(hits), null, 2)
   console.log('Products')
-  console.log(JSON.stringify(get({ kv })), null, 2)
+  console.log(JSON.stringify(get({ kv }), null, 2))
 })
 console.log('Products')
-console.log(JSON.stringify(get({ kv })), null, 2)
+console.log(JSON.stringify(get({ kv }), null, 2))
 
 await start(manifest, config)
