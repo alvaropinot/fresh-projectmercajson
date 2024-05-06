@@ -42,7 +42,7 @@ export const get = async ({ kv, prefix = PREFIX, key = '' } = {}) => {
 }
 
 export const set = async ({
-  kv = kv,
+  kv,
   prefix = PREFIX,
   key = '',
   data = {},
@@ -52,17 +52,18 @@ export const set = async ({
   return entry
 }
 
-export const setHit = async (hit = { id: 'jd' }) => {
+export const setHit = async ({ hit = { id: 'jd' }, kv }) => {
   console.log('Writting', PREFIX, hit.id, hit)
   return await set({
     data: hit,
     key: hit.id,
     prefix: PREFIX,
+    kv,
   }).catch(console.error)
 }
 
-export const setAll = async (hits = []) => {
-  const results = await hits.map(setHit)
+export const setAll = async ({ hits = [], kv }) => {
+  const results = await hits.map((h) => setHit({ h, kv }))
 
   return await Promise.all(results)
 }
@@ -81,7 +82,7 @@ export const handler: Handlers<Product | null> = {
       .then(async function waitAlgo(response) {
         console.log(JSON.stringify(response, null, 2))
 
-        const products = await setAll(response.hits)
+        const products = await setAll({ hits: response.hits, kv })
         console.log(products)
         const productsDB = await getAll({ kv, prefix: PREFIX })
 
