@@ -24,7 +24,9 @@ export const handler: Handlers<Product | null> = {
     // const key = ['Products', id]
     const product = await kv.get(['Products', id])
     // const product = (await kv.get<Product>(key)).gvalue!
-    return new Response(JSON.stringify(product))
+    return new Response(JSON.stringify(product), {
+      headers: { 'Content-Type': 'application/json' },
+    })
   },
   async DELETE(_req, ctx) {
     const id = ctx.params.id
