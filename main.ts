@@ -12,7 +12,7 @@ import { start } from '$fresh/server.ts'
 import manifest from './fresh.gen.ts'
 import config from './fresh.config.ts'
 
-Deno.cron('Log a message', { minute: { every: 5 } }, () => {
+Deno.cron('Log a message', { minute: { every: 5 } }, async () => {
   // Use an API key with `browse` ACL
   const client = algoliasearch('7UZJKL1DJ0', '9d8f2e39e90df472b4f2e559a116fe17')
   const index = client.initIndex('products_prod_mad1_es')
