@@ -7,7 +7,7 @@
 import '$std/dotenv/load.ts'
 import 'https://deno.land/x/xhr@0.1.0/mod.ts'
 import algoliasearch from 'https://esm.sh/algoliasearch@4.23.3'
-import { setAll } from './routes/api/users/index.ts'
+import { setAll, getAll } from './routes/api/users/index.ts'
 
 import { start } from '$fresh/server.ts'
 import manifest from './fresh.gen.ts'
@@ -18,7 +18,7 @@ type Product = {
 }
 const kv = await Deno.openKv()
 
-Deno.cron('Log a message', { minutes: { every: 1 } }, async () => {
+Deno.cron('Update Products', { minutes: { every: 1 } }, async () => {
   // Use an API key with `browse` ACL
   const client = algoliasearch('7UZJKL1DJ0', '9d8f2e39e90df472b4f2e559a116fe17')
   const index = client.initIndex('products_prod_mad1_es')
