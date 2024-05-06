@@ -10,7 +10,7 @@ import { start } from '$fresh/server.ts'
 import manifest from './fresh.gen.ts'
 import config from './fresh.config.ts'
 
-Deno.cron('Log a message', { minute: { every: 1 } }, () => {
+Deno.cron('Log a message', { minute: { every: 5 } }, () => {
   console.log('This will print once an hour.')
 })
 
